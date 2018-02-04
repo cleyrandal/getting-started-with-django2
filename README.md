@@ -2,44 +2,65 @@
 
 ## Estudo Django 2
 
+1. Instalar o virtualenvwrapper
 
-* Instalar o virtualenvwrapper
-$ sudo apt-get install virtualenvwrapper
---------------------------------------------------------------------------------
+   ```bash
+   $ sudo apt-get install virtualenvwrapper
+   ```
 
-* Configurar o virtualenvwrapper
 
-** procurar os arquivo virtualenvwrapper.sh
-```
-$ locate virtualenvwrapper
-/usr/share/virtualenvwrapper/virtualenvwrapper.sh
-```
+2. Configurar o virtualenvwrapper
 
-** tornar executável
-$ sudo chmod +x virtualenvwrapper.sh
+    1. procurar os arquivo virtualenvwrapper.sh
 
-** executar
-./virtualenvwrapper.sh
+        ```bash
+        $ sudo updatedb
 
-** reiniciar o bash
-$ exit
-e abra outro
---------------------------------------------------------------------------------
+        $ locate virtualenvwrapper
+        /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+        ```
 
-* Criar ambiente virtual com o python3 como padrão
-$ which python3
-/usr/bin/python3
+    2. tornar executável
 
-$ mkvirtualenv -p /usr/bin/python3 django2
-(django2)$ 
---------------------------------------------------------------------------------
+        ```bash
+        $ cd /usr/share/virtualenvwrapper
 
-* Instalar o Django:
-$ pip install django==2.0.1
-Downloading Django-2.0.1-py3-none-any.whl (7.1MB)
---------------------------------------------------------------------------------
+        $ sudo chmod +x virtualenvwrapper.sh
+        ```
 
-* Criar um repositório no github:
-No site do github: ‘New repository’
-siga 
---------------------------------------------------------------------------------
+    3. executar
+
+        ```bash
+        ./virtualenvwrapper.sh
+        ```
+
+    4. reiniciar o bash (saia e abra outro)
+
+        ```bash
+        $ exit
+        ```
+
+
+3. Criar ambiente virtual com o python3 como padrão
+
+    ```bash
+    $ which python3
+    /usr/bin/python3
+
+    $ mkvirtualenv -p /usr/bin/python3 django2
+    (django2)$ 
+    ```
+
+
+4. Instalar o Django:
+
+    ```bash
+    $ pip install django==2.0.1
+    ```
+
+
+5. Criar um repositório no github:
+
+    No site do github: **New repository**.
+
+    Siga os passos indicados.
