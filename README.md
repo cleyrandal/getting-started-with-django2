@@ -1,5 +1,3 @@
-[TOC]
-
 # Getting Started with Django 2
 
 ## Instalar o virtualenvwrapper
