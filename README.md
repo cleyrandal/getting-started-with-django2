@@ -55,7 +55,7 @@ $ mkvirtualenv -p /usr/bin/python3 django2
 ### Instalar o Django:
 
 ```bash
-$ pip install django==2.0.1
+(django2)$ pip install django==2.0.1
 ```
 
 
