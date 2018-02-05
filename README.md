@@ -2,65 +2,65 @@
 
 ## Estudo Django 2
 
-1. Instalar o virtualenvwrapper
+### Instalar o virtualenvwrapper
+
+```bash
+$ sudo apt-get install virtualenvwrapper
+```
+
+
+### Configurar o virtualenvwrapper
+
+1. procurar os arquivo virtualenvwrapper.sh
 
    ```bash
-   $ sudo apt-get install virtualenvwrapper
+   $ sudo updatedb
+
+   $ locate virtualenvwrapper
+   /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+   ```
+
+2. tornar executável
+
+   ```bash
+   $ cd /usr/share/virtualenvwrapper
+
+   $ sudo chmod +x virtualenvwrapper.sh
+   ```
+
+3. executar
+
+   ```bash
+   ./virtualenvwrapper.sh
+   ```
+
+4. reiniciar o bash (saia e abra outro)
+
+   ```bash
+   $ exit
    ```
 
 
-2. Configurar o virtualenvwrapper
+### Criar ambiente virtual com o python3 como padrão
 
-    1. procurar os arquivo virtualenvwrapper.sh
+```bash
+$ which python3
+/usr/bin/python3
 
-        ```bash
-        $ sudo updatedb
-
-        $ locate virtualenvwrapper
-        /usr/share/virtualenvwrapper/virtualenvwrapper.sh
-        ```
-
-    2. tornar executável
-
-        ```bash
-        $ cd /usr/share/virtualenvwrapper
-
-        $ sudo chmod +x virtualenvwrapper.sh
-        ```
-
-    3. executar
-
-        ```bash
-        ./virtualenvwrapper.sh
-        ```
-
-    4. reiniciar o bash (saia e abra outro)
-
-        ```bash
-        $ exit
-        ```
+$ mkvirtualenv -p /usr/bin/python3 django2
+(django2)$ 
+```
 
 
-3. Criar ambiente virtual com o python3 como padrão
+### Instalar o Django:
 
-    ```bash
-    $ which python3
-    /usr/bin/python3
-
-    $ mkvirtualenv -p /usr/bin/python3 django2
-    (django2)$ 
-    ```
+```bash
+$ pip install django==2.0.1
+```
 
 
-4. Instalar o Django:
+### Criar um repositório no github:
 
-    ```bash
-    $ pip install django==2.0.1
-    ```
+No site do github: **New repository**.
 
-
-5. Criar um repositório no github:
-
-    No site do github: **New repository**.
-
-    Siga os passos indicados.
+Siga os passos indicados.
