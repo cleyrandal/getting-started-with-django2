@@ -1,15 +1,15 @@
+[TOC]
+
 # Getting Started with Django 2
 
-## Estudo Django 2
-
-### Instalar o virtualenvwrapper
+## Instalar o virtualenvwrapper
 
 ```bash
 $ sudo apt-get install virtualenvwrapper
 ```
 
 
-### Configurar o virtualenvwrapper
+## Configurar o virtualenvwrapper
 
 1. procurar os arquivo virtualenvwrapper.sh
 
@@ -41,7 +41,7 @@ $ sudo apt-get install virtualenvwrapper
    ```
 
 
-### Criar ambiente virtual com o python3 como padrão
+## Criar ambiente virtual com o python3 como padrão
 
 ```bash
 $ which python3
@@ -52,14 +52,14 @@ $ mkvirtualenv -p /usr/bin/python3 django2
 ```
 
 
-### Instalar o Django:
+## Instalar o Django:
 
 ```bash
 (django2)$ pip install django==2.0.1
 ```
 
 
-### Criar um repositório no github:
+## Criar um repositório no github:
 
 No site do github: **New repository**.
 
