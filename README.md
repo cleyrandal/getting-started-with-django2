@@ -85,3 +85,10 @@ A seguinte estrutura será criada:
 │       └── wsgi.py
 └── README.md
 ```
+
+
+### [O Servidor de desenvolvimento](https://docs.djangoproject.com/en/2.0/intro/tutorial01/#the-development-server)
+
+```bash
+(django2)$ python manage.py runserver
+```
