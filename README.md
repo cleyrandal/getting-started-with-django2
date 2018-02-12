@@ -1,5 +1,3 @@
-[TOC]
-
 # Getting Started with Django 2
 
 ## Instalar o virtualenvwrapper
@@ -59,8 +57,31 @@ $ mkvirtualenv -p /usr/bin/python3 django2
 ```
 
 
-## Criar um repositório no github:
+## [Writing your first Django app, part 1](https://docs.djangoproject.com/en/2.0/intro/tutorial01/#writing-your-first-django-app-part-1)
 
-No site do github: **New repository**.
+### Testar o Django
 
-Siga os passos indicados.
+```bash
+(django2)$ python -m django --version
+```
+
+
+### [Criando um projeto](https://docs.djangoproject.com/en/2.0/intro/tutorial01/#creating-a-project)
+
+```bash
+(django2)$ django-admin startproject mysite
+```
+
+A seguinte estrutura será criada:
+
+```
+.
+├── mysite
+│   ├── manage.py
+│   └── mysite
+│       ├── __init__.py
+│       ├── settings.py
+│       ├── urls.py
+│       └── wsgi.py
+└── README.md
+```
