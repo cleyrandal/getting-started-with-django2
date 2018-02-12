@@ -92,3 +92,28 @@ A seguinte estrutura será criada:
 ```bash
 (django2)$ python manage.py runserver
 ```
+
+
+### [Criando o app Polls](https://docs.djangoproject.com/en/2.0/intro/tutorial01/#creating-the-polls-app)
+
+```bash
+(django2)$ python manage.py startapp polls
+```
+
+O diretório `polls` foi criado: 
+
+```
+mysite/
+├── db.sqlite3
+├── manage.py
+├── mysite/
+└── polls
+    ├── admin.py
+    ├── apps.py
+    ├── __init__.py
+    ├── migrations
+    │   └── __init__.py
+    ├── models.py
+    ├── tests.py
+    └── views.py
+```
