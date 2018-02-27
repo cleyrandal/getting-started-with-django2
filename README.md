@@ -59,6 +59,7 @@ $ mkvirtualenv -p /usr/bin/python3 django2
 
 ## [Writing your first Django app, part 1](https://docs.djangoproject.com/en/2.0/intro/tutorial01/#writing-your-first-django-app-part-1)
 
+
 ### Testar o Django
 
 ```bash
@@ -195,8 +196,56 @@ Para ver o resultado, faça:
 (django2)$ python manage.py runserver
 ```
 
-E acesso o endereço abaixo pelo navegador:
+E acesse o endereço abaixo pelo navegador:
 
 ```
 http://localhost:8000/polls/
+```
+
+
+## [Writing your first Django app, part 2](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#writing-your-first-django-app-part-2)
+
+
+### [Configurando o Banco de Dados](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#database-setup)
+
+Abra o arquivo `settings.py` do projeto `mysite`:
+
+```bash
+(django2)$ vim mysite/settings.py
+```
+
+Modifique a time zone para a desejada ([List of tz database time zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)):
+
+```python
+TIME_ZONE = 'America/Sao_Paulo'
+```
+
+Agora rode o comando abaixo para criar as tabelas:
+
+```bash
+(django2)$ python manage.py migrate
+```
+
+O comando `migrate` olha as configurações de INSTALLED_APPS e cria qualquer tabela necessáira no banco de dados de acordo com as configurações do banco de dados em seu arquivo `mysite/settings.py` e as migrações de banco de dados fornecidas com os aplicativos (iremos cobrir isso mais tarde). Você verá uma mensagem para cada migração aplicada. Se você estiver interessado, rode o cliente de linha de comando de seu banco de dados e digite `\dt` (PostgreSQL), `SHOW TABLES;` (MySQL), `.schema` (SQLite), ou `SELECT TABLE_NAME FROM USER_TABLES;` (Oracle) para mostrar as tabelas criadas pelo Django.
+
+Saída do comando:
+
+```bash
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying sessions.0001_initial... OK
 ```
