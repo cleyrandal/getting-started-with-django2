@@ -249,3 +249,31 @@ Running migrations:
   Applying auth.0009_alter_user_last_name_max_length... OK
   Applying sessions.0001_initial... OK
 ```
+
+
+### [Criando os modelos](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#creating-models)
+
+Agora iremos criar nossos modelos. Essencialmente, o layout do banco de dados com metadados adicionais.
+
+Abra o arquivo `models.py`:
+
+```bash
+(django2)$ vim polls/models.py
+```
+
+E digite o código abaixo:
+
+```python
+from django.db import models
+
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+```
