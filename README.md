@@ -277,3 +277,23 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 ```
+
+
+### [Ativando os modelos¶](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#activating-models)
+
+Primeiro nós precisamos dizer ao nosso projeto que o app `polls` está instalado.
+
+Para incluir o app em nosso projeto, nós precisamos adicionar uma referência à essa classe de configuração editando o `INSTALLED_APPS`.
+
+```python
+INSTALLED_APPS = [
+    'polls.apps.PollsConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+```
+
