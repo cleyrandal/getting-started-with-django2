@@ -285,6 +285,8 @@ Primeiro nós precisamos dizer ao nosso projeto que o app `polls` está instalad
 
 Para incluir o app em nosso projeto, nós precisamos adicionar uma referência à essa classe de configuração editando o `INSTALLED_APPS`.
 
+!!! Não esqueça da vírgula após adicionar cada app, para não gerar erros no projeto.
+
 ```python
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
@@ -296,4 +298,59 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 ```
+
+Rodando `makemigrations`, estamos modificando o arquivo que gera o esquema do banco de dados (migrações) ou criando um novo, caso este não exista.
+
+```bash
+(django2)$ python manage.py makemigrations polls
+```
+
+Saída do comando:
+
+```bash
+Migrations for 'polls':
+  polls/migrations/0001_initial.py
+    - Create model Choice
+    - Create model Question
+    - Add field question to choice
+```
+
+O arquivo `polls/migrations/0001_initial.py` criado na migração é um arquivo python comum e pode ser alterado caso você queira implementar algum truque para quando o Django for fazer mudanças no esquema do banco.
+
+Rodando o comando abaixo, podemos ver o código SQL gerado e usado na migração.
+
+```bash
+(django2)$ python manage.py sqlmigrate polls 0001
+```
+
+Se quiser, pode rodar o comando abaixo para verificar se existem problemas no projeto sem executar migrações ou tocar no banco de dados.
+
+```bash
+(django2)$ python manage.py check
+```
+
+Agora, execute `migrate` para criar esses modelos de tabelas no banco de dados:
+
+```bash
+(django2)$ python manage.py migrate
+```
+
+saída do comando:
+
+```bash
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, polls, sessions
+Running migrations:
+  Applying polls.0001_initial... OK
+```
+
+O comando `migrate` pega todas as migrações que ainda não foram executadas e as aplica no banco de dados - essencialmente, sincronizando as mudanças que foram feitas nos modelos (models) com o esquema no banco de dados.
+
+Os três passos principais para fazer modificações no model são:
+
+* Altere seus models (no models.py).
+* Execute `python manage.py makemigrations` para criar migrações para essas alterações.
+* Execute `python manage.py migrate` para aplicar as alterações ao banco de dados.
+
+Os comando são usados em separados para ajudar no versionamento do código.
 
