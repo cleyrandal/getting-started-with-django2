@@ -355,7 +355,7 @@ Os três passos principais para fazer modificações no model são:
 Os comando são usados em separados para ajudar no versionamento do código.
 
 
-### (Brincando com a API)[https://docs.djangoproject.com/en/2.0/intro/tutorial02/#playing-with-the-api]
+### [Brincando com a API](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#playing-with-the-api)
 
 Agora, vamos embarcar no shell interativo do Python e brincar com toda a da liberdade que a API do Django dá a você. Para invocar o shell Python, use o comando:
 
@@ -518,4 +518,4 @@ True
 >>> c.delete()
 ```
 
-Para mais informações sobre relacionamento de modelos, veja (Acessando objetos relacionados)[https://docs.djangoproject.com/en/2.0/ref/models/relations/]. Para mais informação em como usar underscores duplos para pesquisa usando campos da API, veja (Pesquisa com campos)[https://docs.djangoproject.com/en/2.0/topics/db/queries/#field-lookups-intro]. Para um detalhamento completo da API de banco de dados, veja nossa referência à (API de Banco de Dados)[https://docs.djangoproject.com/en/2.0/topics/db/queries/].
+Para mais informações sobre relacionamento de modelos, veja [Acessando objetos relacionados](https://docs.djangoproject.com/en/2.0/ref/models/relations/). Para mais informação em como usar underscores duplos para pesquisa usando campos da API, veja [Pesquisa com campos](https://docs.djangoproject.com/en/2.0/topics/db/queries/#field-lookups-intro). Para um detalhamento completo da API de banco de dados, veja nossa referência à [API de Banco de Dados](https://docs.djangoproject.com/en/2.0/topics/db/queries/).
