@@ -523,6 +523,7 @@ Para mais informações sobre relacionamento de modelos, veja [Acessando objetos
 
 ### [Introdução à API do Django](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#introducing-the-django-admin)
 
+
 #### [Criando um usuário administrador](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#creating-an-admin-user)
 
 Primeiro temos que criar um usuário que possa acessar o site de administração. Rode o seguinte comando:
@@ -551,3 +552,14 @@ Password (again): *********
 Superuser created successfully.
 ```
 
+
+#### [Inicie o servidor de desenvolvimento](https://docs.djangoproject.com/pt-br/2.0/intro/tutorial02/#start-the-development-server)
+O site de administração vem ativado por padrão. Vamos iniciar o servidor de desenvolvimento e explorá-lo.
+
+Se o servidor não estiver sendo executado, inicie-o da seguinte forma:
+
+```bash
+(django2)$ python manage.py runserver
+```
+
+Agora, abra o navegador de internet e vá para “/admin/” no seu domínio local – ex:, `http://127.0.0.1:8000/admin/`. Você deverá ver a tela de acesso.
