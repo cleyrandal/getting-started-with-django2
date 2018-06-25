@@ -519,3 +519,35 @@ True
 ```
 
 Para mais informações sobre relacionamento de modelos, veja [Acessando objetos relacionados](https://docs.djangoproject.com/en/2.0/ref/models/relations/). Para mais informação em como usar underscores duplos para pesquisa usando campos da API, veja [Pesquisa com campos](https://docs.djangoproject.com/en/2.0/topics/db/queries/#field-lookups-intro). Para um detalhamento completo da API de banco de dados, veja nossa referência à [API de Banco de Dados](https://docs.djangoproject.com/en/2.0/topics/db/queries/).
+
+
+### [Introdução à API do Django](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#introducing-the-django-admin)
+
+#### [Criando um usuário administrador](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#creating-an-admin-user)
+
+Primeiro temos que criar um usuário que possa acessar o site de administração. Rode o seguinte comando:
+
+```bash
+(django2)$ python manage.py createsuperuser
+```
+
+Digite seu nome de usuário desejado e pressione enter.
+
+```bash
+Username: admin
+```
+
+Em seguida, será requisitado seu endereço de e-mail desejado:
+
+```bash
+Email address: admin@example.com
+```
+
+O último passo é digitar sua senha. Você será solicitado que digite sua senha duas vezes, a segunda vez como uma confirmação da primeira.
+
+```bash
+Password: **********
+Password (again): *********
+Superuser created successfully.
+```
+
