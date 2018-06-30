@@ -562,4 +562,37 @@ Se o servidor não estiver sendo executado, inicie-o da seguinte forma:
 (django2)$ python manage.py runserver
 ```
 
-Agora, abra o navegador de internet e vá para “/admin/” no seu domínio local – ex:, `http://127.0.0.1:8000/admin/`. Você deverá ver a tela de acesso.
+Agora, abra o navegador de internet e vá para "/admin/" no seu domínio local – ex:, `http://127.0.0.1:8000/admin/`. Você deverá ver a tela de acesso.
+
+
+#### [Entre no site Admin](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#enter-the-admin-site)
+Tente logar com a conta de superuser que você criou no passo anterior.
+
+Nesso ponto, você verá alguns conteúdos editáveis: **groups** e **users**. Estes são fornecidos pelo `django.contrib.auth`, o framework de autenticação que já vem com o Django.
+
+
+### [Faça o app poll ficar editável no admin](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#make-the-poll-app-modifiable-in-the-admin)
+Nesse momento, a aplicação poll não estará disponível no site admin.
+
+Para mostrá-la, nós precisamos informar ao admin que os objetos `Question` tem uma interface admin.
+
+Para isso, abra o arquivo `polls/admin.py` e edite conforme abaixo:
+
+```python
+from django.contrib import admin
+
+from .models import Question
+
+admin.site.register(Question)
+```
+
+
+### [Explore as funcionalidades do admin](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#explore-the-free-admin-functionality)
+1. Clique em "Questions".
+2. Clique na questão "What's up?" para editá-la.
+3. Se o valor de "Date published" não corresponder com a data que você criou na questão no Tutorial 1, isso provavelmente significa que você esqueceu de atribuir o valor correto para a configuração **TIME_ZONE**. Modifique isso e recarregue a página, então, verifique se o valor correto aparece.
+4. Modifique "Date published" clicando nos atalhos "Today" e "Now".
+5. Clique em "Save and continue editing".
+6. Clique em "History" no canto superior direito.
+
+Quando estiver confortável com a “API” dos modelos e estiver familiarizado com o “admin site”, leia part 3 of this tutorial para aprender sobre como adicionar mais “views”para nossa app “polls”.
