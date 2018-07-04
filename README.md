@@ -571,7 +571,7 @@ Tente logar com a conta de superuser que você criou no passo anterior.
 Nesso ponto, você verá alguns conteúdos editáveis: **groups** e **users**. Estes são fornecidos pelo `django.contrib.auth`, o framework de autenticação que já vem com o Django.
 
 
-### [Faça o app poll ficar editável no admin](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#make-the-poll-app-modifiable-in-the-admin)
+#### [Faça o app poll ficar editável no admin](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#make-the-poll-app-modifiable-in-the-admin)
 Nesse momento, a aplicação poll não estará disponível no site admin.
 
 Para mostrá-la, nós precisamos informar ao admin que os objetos `Question` tem uma interface admin.
@@ -587,7 +587,7 @@ admin.site.register(Question)
 ```
 
 
-### [Explore as funcionalidades do admin](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#explore-the-free-admin-functionality)
+#### [Explore as funcionalidades do admin](https://docs.djangoproject.com/en/2.0/intro/tutorial02/#explore-the-free-admin-functionality)
 1. Clique em "Questions".
 2. Clique na questão "What's up?" para editá-la.
 3. Se o valor de "Date published" não corresponder com a data que você criou na questão no Tutorial 1, isso provavelmente significa que você esqueceu de atribuir o valor correto para a configuração **TIME_ZONE**. Modifique isso e recarregue a página, então, verifique se o valor correto aparece.
@@ -596,3 +596,134 @@ admin.site.register(Question)
 6. Clique em "History" no canto superior direito.
 
 Quando estiver confortável com a “API” dos modelos e estiver familiarizado com o “admin site”, leia part 3 of this tutorial para aprender sobre como adicionar mais “views”para nossa app “polls”.
+
+
+## [Writing your first Django app, part 3](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#writing-your-first-django-app-part-3)
+Vamos continuar a aplicação web de enquete e focaremos na criação da interface pública – “views”.
+
+
+### [Visão Geral](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#overview)
+Existe o padrão MVC (Model, View e Controller) e o Django segue esse padrão mas usando uma nomenclatura diferente, que é a MTV (Model, Template, View).
+
+Então, a **view** do MTV é equivalente ao **controller** do MVC.
+
+Esse tutorial fornece instruções básicas para o uso do URLconfs. Para mais informações veja [URL Dispatcher](https://docs.djangoproject.com/en/2.0/topics/http/urls/)
+
+
+### [Escrevendo mais views](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#writing-more-views)
+Agora adicione mais views a `polls/views.py`:
+
+```python
+def detail(request, question_id):
+    return HttpResponse("You're looking at question %s." % question_id)
+
+def results(request, question_id):
+    response = "You're looking at the results of question %s."
+    return HttpResponse(response % question_id)
+
+def vote(request, question_id):
+    return HttpResponse("You're voting on question %s." % question_id)
+```
+
+Ligue essas novas views ao modulo `poll.urls` (polls/urls.py), bastando adicionar as chamadas de `path()` abaixo:
+
+```python
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    # ex: /polls/
+    path('', views.index, name='index'),
+    # ex: /polls/5/
+    path('<int:question_id>/', views.detail, name='detail'),
+    # ex: /polls/5/results/
+    path('<int:question_id>/results/', views.results, name='results'),
+    # ex: /polls/5/vote/
+    path('<int:question_id>/vote/', views.vote, name='vote'),
+]
+```
+
+Rode o servidor e tente acessar os links abaixo:
+- http://127.0.0.1:8000/polls/
+- http://127.0.0.1:8000/polls/34 --> Aqui executa o método `detail()`
+- http://127.0.0.1:8000/polls/34/results --> Página results
+- http://127.0.0.1:8000/polls/34/vote --> Página vote
+
+
+### [Escreva views que realmente façam algo](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#write-views-that-actually-do-something)
+Cada view pode fazer apenas duas coisas:
+- retornar um objeto **`HttpResponse`** com o conteúdo para a página requisitada,
+- ou levantando uma exceção como **`Http404`**.
+
+Modifique apenas a view **index** em `polls/views.py`, conforme abaixo:
+
+```python
+from django.http import HttpResponse
+
+from .models import Question
+
+
+def index(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    output = ', '.join([q.question_text for q in latest_question_list])
+    return HttpResponse(output)
+
+# Não modifique as outras views.
+```
+
+Para mostrar páginas bonitas e com boa usabilidade ficaria muito trabalhoso de editá-las na **view**. Então temos que criar **templates** para serem usados pelas views.
+
+1. Crie um diretório `templates` na pasta `polls`. É lá que o Django irá, por padrão, buscar os templates.
+2. Dentro da pasta `templates` crie um outra pasta `polls` e dentro desta, crie um arquivo chamado `index.html`.
+
+O endereço do template deve ser:
+
+```
+.
+└── mysite
+    ├── mysite
+    └── polls
+        └── templates
+            └── polls
+                └── index.html
+```
+
+Por causa de como o carregador de templates `app_directories` funciona, você pode referenciar esse template no Django simplesmente como `polls/index.html`.
+
+Coloque o código abaixo no template criado (`mysite/polls/templates/polls/index.html`):
+
+```django
+{% if latest_question_list %}
+  <ul>
+    {% for question in latest_question_list %}
+      <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No polls are available.</p>
+{% endif %}
+```
+
+Agora vamos atualizar nossa view `index` em `polls/views.py` para usar o template:
+
+```python
+from django.http import HttpResponse
+from django.template import loader
+
+from .models import Question
+
+
+def index(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    template = loader.get_template('polls/index.html')
+    context = {
+        'latest_question_list': latest_question_list,
+    }
+    return HttpResponse(template.render(context, request))
+```
+
+Esse código carrega o template `polls/index.html` passando-o um contexto.
+O contexto é um dicionário que mapea nomes de variáveis no template em objetos python.
+
+Carregue a página agora digitando o endereço `localhost:8000/polls` e você deve ver uma lista contendo a questão "What's up" do Tutorial 2. Esse endereço aponta para a página `detail` da questão. Você consegue entender esse funcionamento aqui?
