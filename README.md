@@ -595,7 +595,7 @@ admin.site.register(Question)
 5. Clique em "Save and continue editing".
 6. Clique em "History" no canto superior direito.
 
-Quando estiver confortável com a “API” dos modelos e estiver familiarizado com o “admin site”, leia part 3 of this tutorial para aprender sobre como adicionar mais “views”para nossa app “polls”.
+Quando estiver confortável com a “API” dos modelos e estiver familiarizado com o “admin site”, leia a parte 3 desse tutorial para aprender sobre como adicionar mais “views” para nossa app “polls”.
 
 
 ## [Writing your first Django app, part 3](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#writing-your-first-django-app-part-3)
@@ -625,7 +625,7 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 ```
 
-Ligue essas novas views ao modulo `poll.urls` (polls/urls.py), bastando adicionar as chamadas de `path()` abaixo:
+Ligue essas novas views ao módulo `poll.urls` (polls/urls.py), bastando adicionar as chamadas de `path()` abaixo:
 
 ```python
 from django.urls import path
@@ -654,7 +654,7 @@ Rode o servidor e tente acessar os links abaixo:
 ### [Escreva views que realmente façam algo](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#write-views-that-actually-do-something)
 Cada view pode fazer apenas duas coisas:
 - retornar um objeto **`HttpResponse`** com o conteúdo para a página requisitada,
-- ou levantando uma exceção como **`Http404`**.
+- ou levantar uma exceção como **`Http404`**.
 
 Modifique apenas a view **index** em `polls/views.py`, conforme abaixo:
 
@@ -724,6 +724,42 @@ def index(request):
 ```
 
 Esse código carrega o template `polls/index.html` passando-o um contexto.
-O contexto é um dicionário que mapea nomes de variáveis no template em objetos python.
+O contexto é um dicionário que mapea nomes de variáveis do template em objetos python.
 
-Carregue a página agora digitando o endereço `localhost:8000/polls` e você deve ver uma lista contendo a questão "What's up" do Tutorial 2. Esse endereço aponta para a página `detail` da questão. Você consegue entender esse funcionamento aqui?
+Carregue a página agora digitando o endereço `localhost:8000/polls` e você deve ver uma lista contendo a questão "What's up" do Tutorial 2. Esse endereço aponta para a página `detail` da questão.
+
+Você consegue entender esse funcionamento aqui?
+
+
+#### [Um Atalho: render()](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#a-shortcut-render)
+
+É uma técnica de escrita comum, carregar um template, preencher um contexto e retornar um objeto `HttpResponse` com o resultado do template renderizado. Django fornece um atalho. Abaixo, temos toda a view `index()` reescrita:
+
+```python
+from django.shortcuts import render
+
+from .models import Question
+
+
+def index(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    context = {'latest_question_list': latest_question_list}
+    return render(request, 'polls/index.html', context)
+```
+
+A forma de escrita:
+
+```python
+    return render(request, 'polls/index.html', context)
+                  ───────   ────────────────   ───────
+                     │              │             └── 3º argumento (opcional): Dicionário para incluir no template.
+                     │              └── 2º argumento: Nome de um template.
+                     └── 1º argumento: Objeto com a requisição.
+```
+
+é mais comum nos framework web MVC do que:
+
+```python
+    return HttpResponse(template.render(context, request))
+```
+
