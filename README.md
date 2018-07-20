@@ -763,3 +763,29 @@ A forma de escrita:
     return HttpResponse(template.render(context, request))
 ```
 
+
+### [Levantando um erro 404](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#raising-a-404-error)
+
+Agora vamos trabalhar exceções e modificar a view `detail`.
+Abra `polls/views.py` e modifique conforme abaixo:
+
+```python
+from django.http import Http404
+from django.shortcuts import render
+
+from .models import Question
+# ...
+def detail(request, question_id):
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request, 'polls/detail.html', {'question': question})
+```
+
+Crie o template `detail.html` que é referenciado na view `detail` acima:
+
+```bash
+$ vim mysite/polls/templates/polls/detail.html
+```
+
