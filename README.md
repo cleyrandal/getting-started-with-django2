@@ -789,3 +789,9 @@ Crie o template `detail.html` que é referenciado na view `detail` acima:
 $ vim mysite/polls/templates/polls/detail.html
 ```
 
+
+#### [A shortcut: get_object_or_404()](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#a-shortcut-get-object-or-404)
+
+> **Filosofia**
+> Usamos a função ajudante `get_object_or_404()` para não gerar um acoplamento da camada de modelo (model) com a camada de controle (view).
+
