@@ -793,5 +793,30 @@ $ vim mysite/polls/templates/polls/detail.html
 #### [A shortcut: get_object_or_404()](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#a-shortcut-get-object-or-404)
 
 > **Filosofia**
+>
 > Usamos a função ajudante `get_object_or_404()` para não gerar um acoplamento da camada de modelo (model) com a camada de controle (view).
+
+
+### [Use the template system](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#use-the-template-system)
+
+Acesse o arquivo:
+
+```bash
+$ vim mysite/polls/templates/polls/detail.html
+```
+
+e reescreva como abaixo:
+
+```django
+<h1>{{ question.question_text }}</h1>
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul>
+```
+
+- Falta entender melhor como funciona a prioridade de busca explicada abaixo:
+    > The template system uses dot-lookup syntax to access variable attributes. In the example of {{ question.question_text }}, first Django does a dictionary lookup on the object question. Failing that, it tries an attribute lookup – which works, in this case. If attribute lookup had failed, it would’ve tried a list-index lookup.
+
 
