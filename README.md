@@ -820,3 +820,32 @@ e reescreva como abaixo:
     > The template system uses dot-lookup syntax to access variable attributes. In the example of {{ question.question_text }}, first Django does a dictionary lookup on the object question. Failing that, it tries an attribute lookup – which works, in this case. If attribute lookup had failed, it would’ve tried a list-index lookup.
 
 
+### [Removing hardcoded URLs in templates](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#removing-hardcoded-urls-in-templates)
+
+Nosso objetivo aqui é remover links que estão codificados parcialmente fixos (hardcoded) e reescrevê-los de maneira mais dinâmica.
+
+Abra o arquivo `mysite/polls/templates/polls/index.html` e substitua o link que é parcialmente fixo:
+
+```django
+<li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+```
+
+por uma forma mais dinâmica e reutilizável:
+
+```django
+<li><a href="{% url 'detail' question_id %}">{{ question.question_text }}</a></li>
+```
+
+O nome dado a um `path` no arquivo `urls.py` serve como uma referência que podemos usar para chamar essa URL.
+
+```django
+{% url 'detail' question_id %}  # mysite/polls/templates/polls/index.html
+       ───┬────
+          │
+          └──────────────────────────────────────┐
+                                              ───┴────
+path('<int:question_id>/', views.detail, name='detail'),  # mysite/polls/urls.py
+```
+
+Dessa forma, se mudar-mos o endereço do `path` não precisamos mudar o link no(s) template(s).
+
