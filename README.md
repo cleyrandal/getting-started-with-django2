@@ -841,7 +841,6 @@ O nome dado a um `path` no arquivo `urls.py` serve como uma referência que pode
 ```django
 {% url 'detail' question_id %}  # mysite/polls/templates/polls/index.html
        ───┬────
-          │
           └──────────────────────────────────────┐
                                               ───┴────
 path('<int:question_id>/', views.detail, name='detail'),  # mysite/polls/urls.py
@@ -849,3 +848,29 @@ path('<int:question_id>/', views.detail, name='detail'),  # mysite/polls/urls.py
 
 Dessa forma, se mudar-mos o endereço do `path` não precisamos mudar o link no(s) template(s).
 
+
+### [Namespacing URL names](https://docs.djangoproject.com/en/2.0/intro/tutorial03/#namespacing-url-names)
+
+
+Caso existam vários apps no seu projeto Django, devemos nomear o URLconf (`app/urls.py`) de cada app. Veja como nomear o app `polls` abaixo:
+
+```python
+from django.urls import path
+
+from . import views
+
+# Aqui nomeamos o app
+app_name = 'polls'
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('<int:question_id>/', views.detail, name='detail'),
+    path('<int:question_id>/results/', views.results, name='results'),
+    path('<int:question_id>/vote/', views.vote, name='vote'),
+]
+```
+
+Agora podemos chamar a url pelo 'nome_do_app:nome_da_view':
+
+```django
+<li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+```
