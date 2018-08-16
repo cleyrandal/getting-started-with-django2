@@ -980,5 +980,3 @@ ver uma mensagem de erro.
 > Nosso código, até aqui, tem um pequeno problema que é chamado de
 > `race condition`. Veja em [Avoiding race condition using F()](https://docs.djangoproject.com/en/2.0/ref/models/expressions/#avoiding-race-conditions-using-f)
 > para aprender como solucionar esse problema.
-
-»>>>>> Falta comitar o fim desse bloco.
