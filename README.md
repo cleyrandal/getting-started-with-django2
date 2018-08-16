@@ -874,3 +874,111 @@ Agora podemos chamar a url pelo 'nome_do_app:nome_da_view':
 ```django
 <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
 ```
+
+
+## [Writing your first Django app, part 4](https://docs.djangoproject.com/en/2.0/intro/tutorial04/#writing-your-first-django-app-part-4)
+
+
+## [Write a simple form](https://docs.djangoproject.com/en/2.0/intro/tutorial04/#write-a-simple-form)
+
+
+A quick rundown (um resumo rápido):
+
+
+1. Criar um formulário no template `detail.html` que nos permita votar
+2. Substituir a view `vote()` antiga por uma versão que realmente funciona. A view `vote()` não tem template e após processar o voto, redireciona para a view `results()`
+3. Reescrever a view `results()` para pegar a questão e redirecionar para o template `results.html`
+4. Criar o template `results.html`
+
+##
+
+1. Editando o template `polls/template/polls/detail.html`
+
+
+```django
+<h1>{{ question.question_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+{% csrf_token %}
+{% for choice in question.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+{% endfor %}
+<input type="submit" value="Vote" />
+</form>
+```
+
+
+2. Substituir a view `vote()` antiga por uma versão que realmente funciona. A view `vote()` não tem template e após processar o voto, redireciona para a view `results()`
+
+
+Edite o arquivo `polls/views.py` conforme abaixo:
+
+```python
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+
+from .models import Choice, Question
+# ...
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice.",
+        })
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+```
+
+
+3. Reescrever a view `results()` para pegar a questão e redirecionar para o template `results.html`
+
+
+```python
+from django.shortcuts import get_object_or_404, render
+
+
+def results(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+		    return render(request, 'polls/results.html', {'question': question})
+```
+
+
+4. Criar o template `results.html`. Edite o arquivo `vim mysite/polls/templates/polls/results.html`.
+
+
+```django
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+```
+
+Agora, acesse o endereço `/polls/1/` no navegador e vote na questão.
+Você deverá ver uma página de resultados se atualiza sempre que você
+votar. Se você submeter o formulário sem escolher uma opção, você deverá
+ver uma mensagem de erro.
+
+> Nota:
+> Nosso código, até aqui, tem um pequeno problema que é chamado de
+> `race condition`. Veja em [Avoiding race condition using F()](https://docs.djangoproject.com/en/2.0/ref/models/expressions/#avoiding-race-conditions-using-f)
+> para aprender como solucionar esse problema.
+
+»>>>>> Falta comitar o fim desse bloco.
