@@ -1070,3 +1070,32 @@ True
 ```
 
 Uma vez que coisas no futuro não são 'recentes', isso está claramente errado.
+
+
+#### [Create a test to expose the bug](https://docs.djangoproject.com/en/2.0/intro/tutorial05/#create-a-test-to-expose-the-bug)
+
+
+Edite o arquivo `mysite/polls/tests.py` como abaixo:
+
+```python
+import datetime
+
+from django.test import TestCase
+from django.utils import timezone
+
+from .models import Question
+
+
+class QuestionModelTests(TestCase):
+
+    def test_was_published_recently_with_future_question(self):
+        """
+        was_published_recently() returns False for questions whose pub_date
+        is in the future.
+        """
+        time = timezone.now() + datetime.timedelta(days=30)
+        future_question = Question(pub_date=time)
+        self.assertIs(future_question.was_published_recently(), False)
+```
+
+O que fizemos aqui foi criar uma subclasse **django.test.TestCase** com um método que cria uma instância **Question** com uma **pub_date** no futuro. Nós então verificamos a saída de **was_published_recently()** - a qual deveria ser Falsa.
