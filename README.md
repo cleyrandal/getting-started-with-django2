@@ -1039,3 +1039,34 @@ class ResultsView(generic.DetailView):
 def vote(request, question_id):
     ... # same as above, no changes needed.
 ```
+
+
+## [Writing your first Django app, part 5](https://docs.djangoproject.com/en/2.0/intro/tutorial05/#writing-your-first-django-app-part-5)
+
+
+### [Writing our first test](https://docs.djangoproject.com/en/2.0/intro/tutorial05/#writing-our-first-test)
+
+
+#### [We identify a bug](https://docs.djangoproject.com/en/2.0/intro/tutorial05/#we-identify-a-bug)
+
+
+Felizmente, existe um bug em nossa aplicação **polls** que podemos corrigir logo: o método **Question.was_published_recently()** retorna **True** se **Question** foi publicada nos últimos dias (o que está correto), mas também se o campo **pub_date** de **Question** estiver no futuro (o que certamente não é).
+
+Usando o **shell**, verifique se o bug realmente existe. Entre no Admin para criar uma questão que mente que está no futuro e verifique o resultado do método:
+
+```bash
+(django2)$ python manage.py shell
+```
+
+```python
+>>> import datetime
+>>> from django.utils import timezone
+>>> from polls.models import Question
+>>> # create a Question instance with pub_date 30 days in the future
+>>> future_question = Question(pub_date=timezone.now() + datetime.timedelta(days=30))
+>>> # was it published recently?
+>>> future_question.was_published_recently()
+True
+```
+
+Uma vez que coisas no futuro não são 'recentes', isso está claramente errado.
