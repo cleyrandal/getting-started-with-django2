@@ -1099,3 +1099,13 @@ class QuestionModelTests(TestCase):
 ```
 
 O que fizemos aqui foi criar uma subclasse **django.test.TestCase** com um método que cria uma instância **Question** com uma **pub_date** no futuro. Nós então verificamos a saída de **was_published_recently()** - a qual deveria ser Falsa.
+
+
+#### [Running tests](https://docs.djangoproject.com/en/2.0/intro/tutorial05/#running-tests)
+
+
+No terminal, execute:
+
+```bash
+(django2)$ python manage.py test polls
+```
