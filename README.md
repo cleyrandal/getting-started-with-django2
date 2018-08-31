@@ -1109,3 +1109,38 @@ No terminal, execute:
 ```bash
 (django2)$ python manage.py test polls
 ```
+
+
+#### [Fixing the bug](https://docs.djangoproject.com/en/2.0/intro/tutorial05/#fixing-the-bug)
+
+Edite o arquivo `mysite/polls/models.py` conforme abaixo:
+
+```python
+def was_published_recently(self):
+    now = timezone.now()
+    return now - datetime.timedelta(days=1) <= self.pub_date <= now
+```
+
+
+Então, execute os testes novamente:
+
+```bash
+(django2)$ python manage.py test polls
+```
+
+o resultado deve ser
+
+```bash
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default'...
+```
+
+Após identificar um bug, nós escrevemos um teste para expor ele e corrigimos o bug no código, então nosso teste passa.
+
+Várias outras coisas podem dar errado com nossa aplicação no futuro, mas podemos ter certeza que não reintroduziremos o mesmo bug inadivertidamente, porque simplesmente rodamos o teste que nos adverte imediatamente. Podemos considerar essa pequena parte da aplicação marcada como segura para sempre.
