@@ -1144,3 +1144,32 @@ Destroying test database for alias 'default'...
 Após identificar um bug, nós escrevemos um teste para expor ele e corrigimos o bug no código, então nosso teste passa.
 
 Várias outras coisas podem dar errado com nossa aplicação no futuro, mas podemos ter certeza que não reintroduziremos o mesmo bug inadivertidamente, porque simplesmente rodamos o teste que nos adverte imediatamente. Podemos considerar essa pequena parte da aplicação marcada como segura para sempre.
+
+
+#### [More comprehensive tests](https://docs.djangoproject.com/en/2.0/intro/tutorial05/#more-comprehensive-tests)
+
+
+Acrescente mais dois métodos à classe `QuestionModelTests` para testar de forma mais abrangente o comportamento do método `was_published_recently()`. Abra e edite o arquivo `mysite/polls/tests.py`:
+
+```python
+def test_was_published_recently_with_old_question(self):
+    """
+    was_published_recently() returns False for questions whose pub_date
+    is older than 1 day.
+    """
+    time = timezone.now() - datetime.timedelta(days=1, seconds=1)
+    old_question = Question(pub_date=time)
+    self.assertIs(old_question.was_published_recently(), False)
+
+def test_was_published_recently_with_recent_question(self):
+    """
+    was_published_recently() returns True for questions whose pub_date
+    is within the last day.
+    """
+    time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+    recent_question = Question(pub_date=time)
+    self.assertIs(recent_question.was_published_recently(), True)
+```
+
+Novamente, **polls** é um aplicativo simples, mas, por mais complexo que seja no futuro e independentemente de que interaja com outro código, agora temos alguma garantia de que o método para o qual escrevemos testes se comportará da maneira esperada.
+
