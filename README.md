@@ -1173,3 +1173,21 @@ def test_was_published_recently_with_recent_question(self):
 
 Novamente, **polls** é um aplicativo simples, mas, por mais complexo que seja no futuro e independentemente de que interaja com outro código, agora temos alguma garantia de que o método para o qual escrevemos testes se comportará da maneira esperada.
 
+
+### [Test a view](https://docs.djangoproject.com/en/2.0/intro/tutorial05/#test-a-view)
+
+#### [A test for a view](https://docs.djangoproject.com/en/2.0/intro/tutorial05/#a-test-for-a-view)
+
+Antes de tentar consertar alguma coisa, vamos dar uma olhada nas ferramentas à nossa disposição.
+
+
+#### [The Django test client](https://docs.djangoproject.com/en/2.0/intro/tutorial05/#the-django-test-client)
+
+Abri o shell interativo do Django e executei os teste propostos nesse item.
+
+
+```bash
+(django2)$ python manage.py shell
+```
+
+Fazendo os teste, vi que havia errado o nome da variável `latest_question_list` em `view.py`.
